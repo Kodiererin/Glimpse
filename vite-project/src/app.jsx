@@ -13,7 +13,9 @@ const app = () => {
                     <div className='gradient'></div>
                 <div className='app'>
                     <Hero></Hero>
-                    <Demo></Demo>
+                    <Demo>
+                        Demo
+                    </Demo>
                 </div>
             </div>
         </main>

@@ -7,8 +7,9 @@ export const store = configureStore({
         [articleApi.reducerPath] : articleApi.reducer
     },
     middleware: (getDefaultMiddleware)=>{
-        getDefaultMiddleware().concat(articleApi.middleware)
+       return getDefaultMiddleware().concat(articleApi.middleware)
     }
 })
 
 // Reducer Will allow to get the soecific slice.
+// Redux Docs...... 

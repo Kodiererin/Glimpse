@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import {logo} from '../assets';
 
 const Hero = () => {
@@ -18,6 +18,3 @@ const Hero = () => {
 };
 
 export default Hero;
-
-
-// Hello World

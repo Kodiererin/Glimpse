@@ -7,6 +7,8 @@ import { useLazyGetSummaryQuery } from '../services/article';
 const Demo = () => {
   
   const [allArticles,setAllArticles] = useState([]);
+  // Creating a useState to copy the previous articles.
+  const [copied,setCopied] = useState("");
 
   const[article,setArticle] = useState({
     url:'',
@@ -44,6 +46,12 @@ const Demo = () => {
       localStorage.setItem('articles',JSON.stringify(updatedAllArticles));
       console.log(newArticle);
     }
+  }
+
+  const handleCopy = (copyurl) =>{
+      setCopied(copyurl);
+      navigator.clipboard.writeText(copied);
+      setTimeout(()=>{setCopied(false),2000});
   }
 
   return (
@@ -88,8 +96,11 @@ const Demo = () => {
                 onClick={()=> setArticle(item)}
                 className='link_card'
               >
-                <div className='copy_btn' >
-                  <img src={copy}
+                <div className='copy_btn' 
+                onClick={()=> handleCopy(item.url)}>
+                  <img
+                  src = {copied == item.url ? tick : copy}
+                  // Bug in the Code, Please check in Future.
                   alt='copy_icon'
                   className='w-[40%] h-[40%] object-contain' ></img>
                 </div>

@@ -62,13 +62,8 @@ const Demo = () => {
             className='relative flex justify-center items-center'
             // onSubmit={()=>{handleSubmit}}
             onSubmit={handleSubmit}
-            // We will do Proper AI GPT Request.
+            // We will do Proper AI  Request.
             // In Future.
-            // https://www.youtube.com/watch?v=vpvtZZi5ZWk
-            // https://github.com/adrianhajdin/project_ai_summarizer/tree/main/src
-            // https://rapidapi.com/restyler/api/article-extractor-and-summarizer?utm_source=youtube.com%2FJavaScriptMastery&utm_medium=referral&utm_campaign=DevRel
-            // https://vitejs.dev/guide/
-            // https://tailwindcss.com/docs/guides/vite
           >
             <img src={linkIcon}
             alt="Icon"

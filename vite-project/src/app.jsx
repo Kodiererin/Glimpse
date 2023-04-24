@@ -1,28 +1,21 @@
-import React from 'react'
-
 import Hero from "./components/Hero";
 import Demo from "./components/Demo";
 
-import './App.css'
+import "./App.css";
 
-const app = () => {
+const App = () => {
   return (
-    <div>
-        <main>
-            <div className='main' >
-                    <div className='gradient'></div>
-                <div className='app'>
-                    <Hero>
-                        
-                    </Hero>
-                    <Demo>
-                        Demo
-                    </Demo>
-                </div>
-            </div>
-        </main>
-    </div>
-  )
-}
+    <main>
+      <div className='main'>
+        <div className='gradient' />
+      </div>
 
-export default app
+      <div className='app'>
+        <Hero />
+        <Demo />
+      </div>
+    </main>
+  );
+};
+
+export default App;

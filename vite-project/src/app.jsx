@@ -12,7 +12,9 @@ const app = () => {
             <div className='main' >
                     <div className='gradient'></div>
                 <div className='app'>
-                    <Hero></Hero>
+                    <Hero>
+                        
+                    </Hero>
                     <Demo>
                         Demo
                     </Demo>

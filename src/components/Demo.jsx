@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 
 import {copy,linkIcon,loader,tick} from "../assets";
 import { useLazyGetSummaryQuery } from '../services/article';
+import {getSummary} from "./Summarize"
 
 const Demo = () => {
   
@@ -33,7 +34,9 @@ const Demo = () => {
     e.preventDefault();
     // This will prevent the Browser to Reload.
 
-    const {data} = await getSummary({articleUrl : article.url});
+    // const {data} = await getSummary({articleUrl : article.url});
+
+
 
     if(data?.summary){
       const  newArticle  = { ...article , summary : data.summary};

@@ -5,13 +5,13 @@ import { Provider } from 'react-redux'
 // Using React-Redux 
 // Installed React-Redux.
 
-import {store} from './services/store'
+// import {store} from './services/store'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Provider store={store} >
+    {/* <Provider store={store} > */}
       <App />
-    </Provider>
+    {/* </Provider> */}
   </React.StrictMode>,
 )

@@ -11,7 +11,7 @@ const Hero = () => {
             </button>
         </nav>
 
-        <h1 className='head_text' >Summarize Articles<br className='max-md:hidden' /> <span className='orange_gradient' >Open Ai</span></h1> 
+        <h1 className='head_text' >Summarize Articles<br className='max-md:hidden' /> <span className='orange_gradient' >Summarizer</span></h1> 
         {/* <h2 className='desc' >Simplify Your Reading with Summize, an Open source article summarizer that transforms lengthy artices into clear and concise summaries.</h2> */}
         <h2 className='desc' >Summarize is an article summarizer that uses open-source technology to help you read more efficiently by converting lengthy texts into concise summaries.</h2>
     </header>

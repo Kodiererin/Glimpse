@@ -1,9 +1,20 @@
+// import dotenv from 'dotenv';
+// dotenv.config();
+
+import { removeExtra } from "./Utilities";
+
+// Access environment variable
+const APIKey = "c78b6304demsh6dd440870b986e3p1ca001jsnd2d1c5c0d507";
+
 export async function articleSummary(data) {
+  data = removeExtra(data);
+
+  
   async function query(data) {
     const response = await fetch(
       "https://api-inference.huggingface.co/models/sshleifer/distilbart-cnn-12-6",
       {
-        headers: { Authorization: "Bearer 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" },
+        headers: { Authorization: `Bearer ${APIKey}` },
         method: "POST",
         body: JSON.stringify({ inputs: data }), // Adjusted data structure
       }

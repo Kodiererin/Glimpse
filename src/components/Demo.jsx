@@ -1,108 +1,56 @@
 import { useState, useEffect } from "react";
 
-
-// Save the History in the form of array in the localstorage..
-
-
 import { copy, linkIcon, loader, tick } from "../assets";
 import { articleSummary } from "../services/Summarize";
 
-class History {
-  constructor(article, summary) {
-    this.article = article;
-    this.summary = summary;
-  }
-
-  setArticle(article) {
-    this.article = article;
-  }
-
-  setSummary(summary) {
-    this.summary = summary;
-  }
-
-
-  saveArticle() {
-    localStorage.setItem("article", JSON.stringify(this.article));
-    localStorage.setItem("summary", JSON.stringify(this.summary));
-  }
-
-
-  getArticle() {
-    if (localStorage.getItem("article") != null) {
-      console.log(JSON.parse(localStorage.getItem("article")));
-      return JSON.parse(localStorage.getItem("article"));
-    } else {
-      return null;
-    }
-  }
-  getSummary() {
-    if (localStorage.getItem("article") != null) {
-      console.log(JSON.parse(localStorage.getItem("summary")));
-      return JSON.parse(localStorage.getItem("summary"));
-    } else {
-      return null;
-    }
-  }
-}
-
 const Demo = () => {
+  const [article, setArticle] = useState(""); // for article
 
-  let HistoryClass = new History();
-  // let HistoryClass = new History();
-  // console.log(HistoryClass);
-  const [article, setArticle] = useState("");
+  const [summary, setSummary] = useState(""); // for Summary
 
-  const [summary, setSummary] = useState("");
+  const [storeSummary, setStoreSummary] = useState([]);
 
-  const [articleData, setArticleData] = useState([]);
+  let [isFetching, setisFetching] = useState(false); // For Loader
 
-  let [isFetching, setisFetching] = useState(false);
+
 
   const addData = (e) => {
+    const arr = localStorage.getItem("storeSummary");
+    console.log(arr);
+    setStoreSummary(arr ? JSON.parse(arr) : []);
+    console.log(storeSummary);
+    // console.log(storeSummary);
     e.preventDefault();
     // console.log(e.target.value);
     setArticle(e.target.value);
   };
 
-  const handleSubmit = async (e) => {
+  const summarize = async (e) => {
     e.preventDefault();
-    // console.log(await articleSummary(article));
     setisFetching(true);
-    articleSummary(article)
-      .then((data) => {
-        // console.log(data);
-        setSummary(data);
-        HistoryClass.setArticle(article);
-        HistoryClass.setSummary(data);
-        HistoryClass.saveArticle();
-      })
-      .then(() => {
-        console.log("Your Data is ");
-        console.log(summary);
-        addElements(summary);
-        // console.log(isFetching);
-
-       // Set Article and Set Summary.
-        console.log(HistoryClass);
-      });
-      setTimeout(10000);
-      console.log(isFetching);
+  
+    try {
+      const summary = await articleSummary(article);
+      // console.log(summary);
+      setSummary(summary);
+  
+      // Update state after the asynchronous call
+      setStoreSummary((prevStoreSummary) => [...prevStoreSummary, summary]);
+      console.log(storeSummary);
+  
+      // Move localStorage update to useEffect to ensure it captures the updated state
+    } catch (error) {
+      alert("Website is not responding, Please try again later.");
+    } finally {
       setisFetching(false);
+    }
   };
-
-  const addElements = (data) => {
-    const prevData = articleData;
-
-    const newData = [data];
-
-    const updatedData = [...prevData, ...newData];
-
-    setArticleData(updatedData);
-
-    console.log(articleData);
-  };
-
+  
+  // Use useEffect to update local storage whenever storeSummary changes
+  useEffect(() => {
+    localStorage.setItem("storeSummary", JSON.stringify(storeSummary));
+  }, [storeSummary]);
+  
   return (
     <section className="mt-16 w-full max-w-xl">
       {/* Search Component */}
@@ -124,16 +72,16 @@ const Demo = () => {
           <button
             type="Submit"
             className="submit_btn peer-focus:border-gray-700 peer-focus:text-gray-700"
-            onClick={(e) => handleSubmit(e)}
+            onClick={(e) => summarize(e)}
           >
             {" "}
             🔍{" "}
           </button>
         </form>
         {/* Browser articleHistory */}
-        {articleData.length == 0 ? (
+        {summarize.length == 0 ? (
           <div className="flex flex-col gap-1 max-h-60 overflow-y-auto">
-            {articleData.map((item, index) => (
+            {storeSummary.map((item, index) => (
               <div
                 key={`link-${index}`}
                 onClick={() => setArticle(item)}
@@ -161,9 +109,8 @@ const Demo = () => {
       <div className="my-10 max-w-full flex justify-center items-center">
         {isFetching == true ? (
           <img src={loader} alt="loader" className="w-20 h-20 object-contain" />
-        ) : (
-          summary!=''?(
-            <div className="flex flex-col gap-3">
+        ) : summary != "" ? (
+          <div className="flex flex-col gap-3">
             <h2 className="font-satoshi fon-bold text-gray-600 text-xl ">
               Article <span className="blue_gradient">Summary</span>
             </h2>
@@ -173,20 +120,25 @@ const Demo = () => {
               </p>
             </div>
           </div>
-          ):(<div></div>)
+        ) : (
+          <div></div>
         )}
       </div>
-      {localStorage.getItem("article") !== null && (
+      {storeSummary.length > 0 ? (
         <div>
           <h2 className="font-satoshi fon-bold text-gray-600 text-xl">
             History
           </h2>
-          <div className="summary_box">
-            <p className="font-inter font-medium text-sm text-gray-700">
-              {HistoryClass.getSummary()}
-            </p>
-          </div>
+          {storeSummary.map((item, index) => (
+            <div className="summary_box" key={index}>
+              <p className="font-inter font-medium text-sm text-gray-700">
+                {item}
+              </p>
+            </div>
+          ))}
         </div>
+      ) : (
+        <div></div>
       )}
     </section>
   );

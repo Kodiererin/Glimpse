@@ -8,4 +8,8 @@ config();
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  build: {
+    target: 'es2022', // or another target that supports top-level await
+  },
 });
+
